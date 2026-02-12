@@ -10,9 +10,30 @@ export const Banner = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState('');
   const [delta, setDelta] = useState(300 - Math.random() * 100);
-  const [index, setIndex] = useState(1);
+  // Removed unused index variable
   const toRotate = [ "Full Stack Developer", "Python Developer", "AI/ML Engineer", "Backend Developer" ];
   const period = 2000;
+
+  const tick = useCallback(() => {
+    let i = loopNum % toRotate.length;
+    let fullText = toRotate[i];
+    let updatedText = isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1);
+
+    setText(updatedText);
+
+    if (isDeleting) {
+      setDelta(prevDelta => prevDelta / 2);
+    }
+
+    if (!isDeleting && updatedText === fullText) {
+      setIsDeleting(true);
+      setDelta(period);
+    } else if (isDeleting && updatedText === '') {
+      setIsDeleting(false);
+      setLoopNum(loopNum + 1);
+      setDelta(500);
+    }
+  }, [isDeleting, loopNum, period, text, toRotate]);
 
   useEffect(() => {
     let ticker = setInterval(() => {
@@ -20,7 +41,7 @@ export const Banner = () => {
     }, delta);
 
     return () => { clearInterval(ticker) };
-  }, [text, delta, tick])
+  }, [text, delta, tick]);
 
   const tick = () => {
     let i = loopNum % toRotate.length;
