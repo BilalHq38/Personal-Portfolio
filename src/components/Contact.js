@@ -28,24 +28,24 @@ export const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setButtonText("Opening Email...");
-
-    const fullName = `${formDetails.firstName} ${formDetails.lastName}`.trim();
-    const subject = `Portfolio Inquiry - ${fullName || 'New Message'}`;
-    const bodyLines = [
-      `Name: ${fullName || '-'}`,
-      `Email: ${formDetails.email || '-'}`,
-      `Phone/WhatsApp: ${formDetails.phone || '03100119166'}`,
-      '',
-      'Message:',
-      formDetails.message || '-',
-    ];
-    const mailto = `mailto:${emailTo}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
-
-    window.location.href = mailto;
-    setButtonText("Open Email");
-    setFormDetails(formInitialDetails);
-    setStatus({ success: true, message: 'Your email client opened with the message ready to send.' });
+    setButtonText("Sending...");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formDetails),
+      });
+      const result = await response.json();
+      if (response.ok && result.status === "Message Sent") {
+        setStatus({ success: true, message: "Message sent successfully!" });
+        setFormDetails(formInitialDetails);
+      } else {
+        setStatus({ success: false, message: result.message || "Failed to send message." });
+      }
+    } catch (error) {
+      setStatus({ success: false, message: "An error occurred. Please try again later." });
+    }
+    setButtonText("Send");
   };
 
   return (
