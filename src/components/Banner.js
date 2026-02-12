@@ -34,10 +34,12 @@ export const Banner = () => {
       setDelta(500);
     }
   }, [isDeleting, loopNum, period, text, toRotate]);
-                <span className="tagline">Welcome to my Portfolio</span>
-                <h1>{`Hi! I'm Muhammad Bilal Hashmi`} <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "Full Stack Developer", "Python Developer", "AI/ML Engineer" ]'><span className="wrap">{text}</span></span></h1>
+                <>
+                  <span className="tagline">Welcome to my Portfolio</span>
+                  <h1>{`Hi! I'm Muhammad Bilal Hashmi`} <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "Full Stack Developer", "Python Developer", "AI/ML Engineer" ]'><span className="wrap">{text}</span></span></h1>
                   <p>A passionate Computer Science graduate from National University of Technology, specializing in full-stack development, AI/ML, and building scalable applications. I bring strong problem-solving skills and a commitment to delivering high-quality solutions.</p>
                   <button onClick={() => console.log('connect')}>Let’s Connect <ArrowRightCircle size={25} /></button>
+                </>
               </div>}
             </TrackVisibility>
           </Col>
