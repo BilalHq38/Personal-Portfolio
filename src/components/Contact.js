@@ -5,7 +5,7 @@ import 'animate.css';
 import TrackVisibility from 'react-on-screen';
 
 export const Contact = () => {
-  const emailTo = 'mbilalhq4u@gmail.com';
+  // Removed unused emailTo variable
   const whatsappUrl = 'https://wa.me/923100119166';
 
   const formInitialDetails = {
